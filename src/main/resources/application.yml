@@ -11,18 +11,27 @@ eureka:
 spring:
   cloud:
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Welcome, Spring Cloud Gateway
+            preLogger: true
+            postLogger: true
+
       routes:
         - id: first-service
           uri: http://localhost:8083/
           predicates:
             - Path=/first-service/**
           filters:
-            - AddRequestHeader=first-request, first-request-header2
-            - AddResponseHeader=first-request, first-response-header2
+#            - AddRequestHeader=first-request, first-request-header2
+#            - AddResponseHeader=first-request, first-response-header2
+             - CustomFilter
         - id: second-service
           uri: http://localhost:8082/
           predicates:
             - Path=/second-service/**
           filters:
-            - AddRequestHeader=second-request, first-request-header2
-            - AddResponseHeader=second-request, first-response-header2
+#            - AddRequestHeader=second-request, first-request-header2
+#            - AddResponseHeader=second-request, first-response-header2
+             - CustomFilter
