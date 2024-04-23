@@ -13,6 +13,11 @@ spring:
     import: optional:configserver:http://localhost:8888
   application:
     name: Spring Gateway
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: test
+    password: test
   cloud:
     config:
       name: ecommerce
@@ -103,4 +108,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httpexchages
+        include: refresh, health, beans, httpexchages, busrefresh
