@@ -11,16 +11,18 @@ eureka:
 spring:
   config:
     import: optional:configserver:http://localhost:8888
+#  profiles:
+#    active: local
   application:
     name: Spring Gateway
   rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: test
-    password: test
+    # host: 127.0.0.1
+    host: localhost
+    username: guest
+    password: guest
   cloud:
     config:
-      name: ecommerce
+      name: userService
       enabled: true
       profile: local
     gateway:
@@ -68,16 +70,16 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/**
 
 
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalog-service/**
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/order-service/**
 
         - id: first-service
           uri: lb://MY-FIRST-SERVICE
@@ -101,8 +103,8 @@ spring:
                  preLogger: true
                  postLogger: true
 
-token:
-  secret: user_tokenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+#token:
+#  secret: user_token123456789user_token123456789user_token123456789user_token123456789user_token123456789
 
 management:
   endpoints:
